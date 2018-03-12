@@ -37,13 +37,13 @@ ROLE_ARN=arn:aws:iam::${_AWS_ACCOUNT}:role/ecsEventsRole
 #     --profile ${STEP_AWS_PROFILE} \
 #     --name "${STEP_SCHEDULE_RULE_NAME}" 
 
-rules=$(aws --profile ${STEP_AWS_PROFILE} events list-rules --name-prefix $STEP_APP_NAME --output text --query "Rules[*].Name")
+rules=$(aws events list-rules --name-prefix $STEP_APP_NAME --output text --query "Rules[*].Name")
 for rule in $rules; do 
-    targets=$(aws --profile ${STEP_AWS_PROFILE} events list-targets-by-rule --rule $rule --output text --query "Targets[*].Id")
+    targets=$(aws events list-targets-by-rule --rule $rule --output text --query "Targets[*].Id")
     for target in $targets; do 
         warn "Removing target: $target"     
-        aws --profile dev events remove-targets --rule $rule --ids $target;
+        aws events remove-targets --rule $rule --ids $target;
     done
     warn "Deleting rule: $rule"
-    aws --profile dev events delete-rule --name $rule
+    aws dev events delete-rule --name $rule
 done
