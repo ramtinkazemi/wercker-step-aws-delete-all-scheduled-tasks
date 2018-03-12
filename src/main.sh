@@ -37,7 +37,7 @@ ROLE_ARN=arn:aws:iam::${_AWS_ACCOUNT}:role/ecsEventsRole
 #     --profile ${STEP_AWS_PROFILE} \
 #     --name "${STEP_SCHEDULE_RULE_NAME}" 
 
-rules=$(aws --profile ${STEP_AWS_PROFILE} events list-rules --name-prefix $APP_NAME --output text --query "Rules[*].Name")
+rules=$(aws --profile ${STEP_AWS_PROFILE} events list-rules --name-prefix $STEP_APP_NAME --output text --query "Rules[*].Name")
 for rule in $rules; do 
     targets=$(aws --profile ${STEP_AWS_PROFILE} events list-targets-by-rule --rule $rule --output text --query "Targets[*].Id")
     for target in $targets; do 

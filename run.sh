@@ -18,7 +18,7 @@ type_exists() {
   return 1
 }
 
-STEP_PREFIX="WERCKER_AWS_ECS_DELETE_SCHEDULED_TASK"
+STEP_PREFIX="WERCKER_AWS_ECS_DELETE_ALL_SCHEDULED_TASKS"
 step_var() {
   echo $(tmp=${STEP_PREFIX}_$1 && echo ${!tmp}) 
 }
@@ -57,17 +57,11 @@ if [ -z "$(step_var 'REGION')" ]; then
   exit 1
 fi
 
-echo "HERE 1"
-
-if [ -z "$(step_var 'SCHEDULE_RULE_NAME')" ]; then
-  error "Please set the 'schedule-rule-name' variable"
+if [ -z "$(step_var 'APP_NAME')" ]; then
+  error "Please set the 'app-name' variable"
   exit 1
 fi
 
-if [ -z "$(step_var 'TARGET_ID')" ]; then
-  error "Please set the 'target-id' variable"
-  exit 1
-fi
 
 # INPUT Variables for main.sh
 
@@ -76,11 +70,8 @@ STEP_AWS_ACCESS_KEY_ID=$(step_var 'KEY')
 STEP_AWS_SECRET_ACCESS_KEY=$(step_var 'SECRET')
 STEP_AWS_DEFAULT_REGION=$(step_var 'REGION')
 
-#FOR AWS EVENT RULE
-STEP_SCHEDULE_RULE_NAME=$(step_var 'SCHEDULE_RULE_NAME')
 
-#FOR AWS EVENT TARGET
-STEP_TARGET_ID=$(step_var 'TARGET_ID')
+STEP_APP_NAME=$(step_var 'APP_NAME')
 
 STEP_DIR=$WERCKER_STEP_ROOT
 
