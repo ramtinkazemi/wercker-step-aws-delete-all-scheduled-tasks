@@ -17,6 +17,7 @@ aws configure set aws_access_key_id ${STEP_AWS_ACCESS_KEY_ID} --profile ${STEP_A
 aws configure set aws_secret_access_key ${STEP_AWS_SECRET_ACCESS_KEY} --profile ${STEP_AWS_PROFILE}
 if [ -n "${STEP_AWS_DEFAULT_REGION}" ]; then
   aws configure set region ${STEP_AWS_DEFAULT_REGION} --profile ${STEP_AWS_PROFILE}
+  warn "Here 1"
 fi
 
 warn "Collection Input Data for Target template"
