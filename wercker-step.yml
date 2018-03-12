@@ -1,5 +1,5 @@
 name: aws-ecs-delete-all-scheduled-tasks
-version: 0.0.6
+version: 0.0.7
 description: Delete all scheduled tasks related to an app from AWS ECS
 keywords:
   - aws
